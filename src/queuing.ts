@@ -1,4 +1,5 @@
-import { Observable, Operation, NextLink, FetchResult } from 'apollo-link';
+import { Observable, Operation, NextLink, FetchResult } from '@apollo/client';
+import uuidV4 from 'uuid/v4';
 
 export interface SubscriberInterface {
   next?: (result: FetchResult) => void;
@@ -52,7 +53,7 @@ export class OperationQueuing {
 
   public consumeQueue(): void {
     this.queuedRequests.forEach(request => {
-      const key = request.operation.toKey();
+      const key = uuidV4()
       this.subscriptions[key] =
         request.forward(request.operation).subscribe(request.subscriber);
 
